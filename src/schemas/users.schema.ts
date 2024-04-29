@@ -1,13 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { v4 } from 'uuid';
 
 export type CatDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ _id: 'Number' })
-  id: string;
-
   @Prop({ required: true })
   firstName: string;
 
