@@ -8,7 +8,6 @@ async function bootstrap() {
     .setTitle('API BAKERY MONGO')
     .setDescription('The cats API description')
     .setVersion('1.0')
-    .addTag('users')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
