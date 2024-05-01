@@ -11,11 +11,12 @@ export class ProductsService {
   ) {}
 
   create(createProductDto: CreateProductDto) {
-    return createProductDto;
+    const product = new this.productsModel(createProductDto);
+    return product.save();
   }
 
   findAll() {
-    return `This action returns all products`;
+    return this.productsModel.find().exec();
   }
 
   findOne(id: number) {
