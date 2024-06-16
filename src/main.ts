@@ -4,6 +4,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: ['*', 'http://localhost:3000', 'http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle('API BAKERY MONGO')
     .setDescription('The cats API description')
