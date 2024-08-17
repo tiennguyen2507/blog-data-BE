@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { DataMaterModule } from './data-mater/data-mater.module';
 import { ProductsModule } from './products/products.module';
+import { GateModule } from './gatewaySocket/gatewaySocket.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ProductsModule } from './products/products.module';
     AuthModule,
     DataMaterModule,
     ProductsModule,
+    GateModule,
   ],
   controllers: [AppController],
   providers: [AppService],
