@@ -14,7 +14,9 @@ export class AuthService {
   ) {}
 
   private async generateToken(payload: { id: string; email: string }) {
-    const access_token = await this.jwtService.signAsync(payload);
+    const access_token = await this.jwtService.signAsync(payload, {
+      secret: '123',
+    });
     const refresh_token = await this.jwtService.signAsync(payload, {
       secret: '123',
     });
@@ -58,5 +60,10 @@ export class AuthService {
       refresh_token: 'refresh_token_string',
     });
     return user.save();
+  }
+
+  async getInfo(_id: string): Promise<User> {
+    const user = await this.userModel.findOne({ _id });
+    return user;
   }
 }
