@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from 'src/schemas/users.schema';
 import { Model } from 'mongoose';
+import { fieldSelector } from 'src/lib';
 
 @Injectable()
 export class UsersService {
@@ -13,19 +14,32 @@ export class UsersService {
     return createdUser.save();
   }
 
-  findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async findAll(): Promise<User[]> {
+    const users = await this.userModel
+      .find()
+      .select(fieldSelector.exclude(['refresh_token', 'password']))
+      .exec();
+
+    return users.map((user) => {
+      const value = {
+        ...user.toObject(),
+        fullName: `${user.firstName} ${user.lastName}`,
+      };
+      delete value.lastName;
+      delete value.firstName;
+      return value;
+    });
   }
 
-  findOne(id: string): Promise<User> {
-    return this.userModel.findById(id);
+  async findOne(id: string): Promise<User> {
+    return await this.userModel.findById(id);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${updateUserDto} user`;
   }
 
-  remove(id: string) {
-    return this.userModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    return await this.userModel.findByIdAndDelete(id);
   }
 }
