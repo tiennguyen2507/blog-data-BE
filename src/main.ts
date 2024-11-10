@@ -10,8 +10,8 @@ async function bootstrap() {
     credentials: true,
   });
   const config = new DocumentBuilder()
-    .setTitle('API BAKERY MONGO')
-    .setDescription('The cats API description')
+    .setTitle('Nest_mongoose_bakery')
+    .setDescription('All api BE bakery')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
