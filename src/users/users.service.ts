@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from 'src/schemas/users.schema';
 import { Model } from 'mongoose';
 import { fieldSelector } from 'src/lib';
+import { GetAllResponse } from './type';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +15,7 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<GetAllResponse[]> {
     const users = await this.userModel
       .find()
       .select(fieldSelector.exclude(['refresh_token', 'password']))
@@ -35,8 +36,13 @@ export class UsersService {
     return await this.userModel.findById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${updateUserDto} user`;
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
+      updateUserDto,
+      { new: true },
+    );
+    return updatedUser;
   }
 
   async remove(id: string) {
