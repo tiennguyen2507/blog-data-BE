@@ -1,8 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
 import { pathToRegexp } from 'path-to-regexp';
+import { MyGateway } from './gatewaySocket/gateway';
 
 @Controller()
 export class AppController {
+  constructor(
+    private myGateway: MyGateway, // Inject MyGateway
+  ) {}
+  @Get('/hello1')
+  hello1() {
+    this.myGateway.server.emit('notification', 'đã đăng kí user thành công!');
+    return 'hello';
+  }
+
   @Get('/hello')
   hello() {
     const apiList = [
