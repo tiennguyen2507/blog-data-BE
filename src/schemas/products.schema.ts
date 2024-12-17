@@ -14,22 +14,18 @@ export class Product {
   description: string;
 
   @Prop({ required: true })
-  size: Array<string>;
+  sizes: {
+    size: 'S' | 'M' | 'L';
+    price: number;
+    sales: number;
+    image: string[];
+  }[];
 
-  @Prop({ required: true })
-  price: number;
-
-  @Prop({ required: true })
-  sales: number;
-
-  @Prop({ required: true })
-  image: string;
-
-  @Prop({ required: true })
-  category: string;
-
-  @Prop({ nullable: true, default: null })
-  subImage: string;
+  @Prop({
+    enum: ['bakery', 'accessory', 'other'],
+    default: 'bakery',
+  })
+  category: 'bakery' | 'accessory' | 'other';
 }
 
 export const ProductsSchema = SchemaFactory.createForClass(Product);

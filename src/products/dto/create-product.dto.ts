@@ -1,43 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateProductDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @MaxLength(50)
   title: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @MaxLength(200)
   description: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsArray()
-  size: Array<string>;
+  @IsArray({ each: true })
+  sizes: {
+    size: 'S' | 'M' | 'L';
+    price: number;
+    sales: number;
+    image: string[];
+  }[];
 
-  @ApiProperty()
+  @ApiProperty({
+    enum: ['bakery', 'accessory', 'other'],
+    default: 'bakery',
+  })
   @IsNotEmpty()
-  @IsNumber()
-  price: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  sales: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  image: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  category: string;
-
-  @ApiProperty()
-  @IsString()
-  subImage: string;
+  @IsEnum(['bakery', 'accessory', 'other'])
+  category: 'bakery' | 'accessory' | 'other';
 }
