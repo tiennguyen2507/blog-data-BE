@@ -18,7 +18,9 @@ export class UsersService {
   async findAll(): Promise<GetAllResponse[]> {
     const users = await this.userModel
       .find()
-      .select(fieldSelector.exclude(['refresh_token', 'password']))
+      .select(
+        fieldSelector.exclude(['refresh_token', 'password'], { withId: true }),
+      )
       .exec();
 
     return users.map((user) => {
