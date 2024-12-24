@@ -4,13 +4,11 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayDisconnect,
-  OnGatewayConnection,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway(8000)
-export class MyGateway implements OnGatewayDisconnect, OnGatewayConnection {
+@WebSocketGateway({ cors: true })
+export class MyGateway {
   @WebSocketServer()
   server: Server;
 
@@ -20,11 +18,8 @@ export class MyGateway implements OnGatewayDisconnect, OnGatewayConnection {
     console.log({ body, header });
   }
 
-  handleConnection(@ConnectedSocket() client: Socket) {
-    console.log(`${client.id} connect!`);
-  }
-
-  handleDisconnect(@ConnectedSocket() client: Socket) {
-    console.log(`${client.id} disconnect!`);
+  @SubscribeMessage('notification')
+  onNewMessage(@MessageBody() body: any, @ConnectedSocket() client: Socket) {
+    console.log({ body, client: client.handshake.headers });
   }
 }

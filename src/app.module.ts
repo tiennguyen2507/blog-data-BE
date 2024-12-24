@@ -8,6 +8,8 @@ import { ProductsModule } from './products/products.module';
 import { GateModule } from './gatewaySocket/gatewaySocket.module';
 import { MyGateway } from './gatewaySocket/gateway';
 import { DatabaseModule } from './database/database.module';
+import { ApiCommonModule } from './api-common/api-common.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { DatabaseModule } from './database/database.module';
     ProductsModule,
     GateModule,
     DatabaseModule,
+    ApiCommonModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, MyGateway],
