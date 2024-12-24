@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class MyGateway implements OnModuleInit {
   @WebSocketServer()
   server: Server;
@@ -21,5 +21,7 @@ export class MyGateway implements OnModuleInit {
   }
 
   @SubscribeMessage('notification')
-  onNewMessage(@MessageBody() body: any, @ConnectedSocket() client: Socket) {}
+  onNewMessage(@MessageBody() body: any, @ConnectedSocket() client: Socket) {
+    console.log({ body, client: client.handshake.headers });
+  }
 }

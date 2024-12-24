@@ -8,6 +8,7 @@ import { DataMaterModule } from './data-mater/data-mater.module';
 import { ProductsModule } from './products/products.module';
 import { GateModule } from './gatewaySocket/gatewaySocket.module';
 import { ApiCommonModule } from './api-common/api-common.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ApiCommonModule } from './api-common/api-common.module';
     ProductsModule,
     GateModule,
     ApiCommonModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
