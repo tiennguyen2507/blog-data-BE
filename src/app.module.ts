@@ -4,23 +4,17 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
-import { GateModule } from './gatewaySocket/gatewaySocket.module';
-import { MyGateway } from './gatewaySocket/gateway';
 import { DatabaseModule } from './database/database.module';
-import { ApiCommonModule } from './api-common/api-common.module';
-import { ChatModule } from './chat/chat.module';
-
+import { PostsModule } from './posts/posts.module';
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     ProductsModule,
-    GateModule,
     DatabaseModule,
-    ApiCommonModule,
-    ChatModule,
+    PostsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MyGateway],
+  providers: [AppService],
 })
 export class AppModule {}

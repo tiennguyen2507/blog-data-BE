@@ -3,6 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Model } from 'mongoose';
 import { PRODUCT_NAME_MODEL, Product } from 'src/schemas/products.schema';
+import { paginate, PaginationQuery, PaginationResult } from '../lib/pagination';
 
 @Injectable()
 export class ProductsService {
@@ -15,8 +16,8 @@ export class ProductsService {
     return createdProduct.save();
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.productsModel.find().lean().exec();
+  async findAll(query?: PaginationQuery): Promise<PaginationResult<Product>> {
+    return paginate<Product>(this.productsModel, query);
   }
 
   async findOne(id: string): Promise<Product> {

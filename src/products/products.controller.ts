@@ -8,11 +8,13 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { PaginationQuery } from '../lib/pagination';
 
 @ApiTags('Products')
 @Controller('products')
@@ -26,8 +28,8 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  findAll(@Query() query: PaginationQuery) {
+    return this.productsService.findAll(query);
   }
 
   @Get(':id')
