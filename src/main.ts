@@ -10,8 +10,8 @@ async function bootstrap() {
     credentials: true,
   });
   const config = new DocumentBuilder()
-    .setTitle('Nest_mongoose_bakery')
-    .setDescription('All api BE bakery')
+    .setTitle('Blog-data-api')
+    .setDescription('All api blog data')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
