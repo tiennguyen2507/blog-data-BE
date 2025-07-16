@@ -12,5 +12,33 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo_express_bakery
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: bakery_user
+      ME_CONFIG_MONGODB_ADMINPASSWORD: bakery_pass
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: 12345678a
+    ports:
+      - '8081:8081'
+    depends_on:
+      - mongo
+
+  app:
+    build: .
+    container_name: nest_bakery_app
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://bakery_user:bakery_pass@mongo:27017/bakery_db?authSource=admin
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+
 volumes:
   mongo_data:
