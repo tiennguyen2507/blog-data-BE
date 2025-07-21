@@ -6,6 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 import { PostsModule } from './posts/posts.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { ImageController } from './image/image.controller';
 @Module({
   imports: [
     UsersModule,
@@ -13,8 +15,9 @@ import { PostsModule } from './posts/posts.module';
     ProductsModule,
     DatabaseModule,
     PostsModule,
+    CloudinaryModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ImageController],
   providers: [AppService],
 })
 export class AppModule {}
