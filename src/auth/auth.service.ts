@@ -52,13 +52,6 @@ export class AuthService {
   }
 
   async register(registerUserDto: RegisterAuthDto): Promise<any> {
-    // Check if email already exists
-    const existingUser = await this.userModel.findOne({
-      email: registerUserDto.email,
-    });
-    if (existingUser) {
-      throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
-    }
     const hashPassword = await this.encodePassword(registerUserDto.password);
 
     const user = new this.userModel({

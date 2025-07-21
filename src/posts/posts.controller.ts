@@ -9,22 +9,26 @@ import {
   ValidationPipe,
   UsePipes,
   Query,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../lib/pagination';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseGuards(AuthGuard)
   @HttpPost()
   @UsePipes(new ValidationPipe({ transform: true }))
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto, @Req() req) {
+    return this.postsService.create(createPostDto, req.user.id);
   }
 
   @Get()

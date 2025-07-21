@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
         secret: '123',
       });
 
+      request.user = payload;
       request['user_data'] = payload;
     } catch (error) {
       throw new UnauthorizedException();
