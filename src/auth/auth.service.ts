@@ -51,7 +51,14 @@ export class AuthService {
     return hash;
   }
 
-  async register(registerUserDto: RegisterAuthDto): Promise<User> {
+  async register(registerUserDto: RegisterAuthDto): Promise<any> {
+    // Check if email already exists
+    const existingUser = await this.userModel.findOne({
+      email: registerUserDto.email,
+    });
+    if (existingUser) {
+      throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+    }
     const hashPassword = await this.encodePassword(registerUserDto.password);
 
     const user = new this.userModel({
@@ -59,7 +66,10 @@ export class AuthService {
       password: hashPassword,
       refresh_token: 'refresh_token_string',
     });
-    return user.save();
+    const savedUser = await user.save();
+    // generate access token and refresh token for the new user
+    const payload = { id: savedUser.id, email: savedUser.email };
+    return this.generateToken(payload);
   }
 
   async getInfo(_id: string): Promise<User> {
