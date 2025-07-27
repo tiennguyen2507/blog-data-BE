@@ -16,9 +16,11 @@ export class AuthService {
   private async generateToken(payload: { id: string; email: string }) {
     const access_token = await this.jwtService.signAsync(payload, {
       secret: '123',
+      expiresIn: '1h',
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       secret: '123',
+      expiresIn: '1h',
     });
 
     await this.userModel.findOneAndUpdate(

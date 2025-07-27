@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsBoolean, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty()
@@ -12,16 +12,11 @@ export class CreatePostDto {
   @IsString()
   description: string;
 
-  @ApiProperty({ default: true })
+  @ApiProperty({
+    required: false,
+    description: 'URL thumbnail image from Cloudinary',
+  })
   @IsOptional()
-  @IsBoolean()
-  status?: boolean = true;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  createdAt?: Date;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  updatedAt?: Date;
+  @IsString()
+  thumbnail?: string;
 }

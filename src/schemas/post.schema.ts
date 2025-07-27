@@ -14,6 +14,9 @@ export class Post {
   @Prop({ default: true })
   status: boolean;
 
+  @Prop({ default: null })
+  thumbnail?: string;
+
   @Prop()
   createdAt?: Date;
 
