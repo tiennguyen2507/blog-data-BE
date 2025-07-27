@@ -45,7 +45,11 @@ export class PostsService {
   }
 
   async findOne(id: string): Promise<Post> {
-    const post = await this.postModel.findById(id).lean().exec();
+    const post = await this.postModel
+      .findById(id)
+      .populate('createdBy', 'firstName lastName avatar')
+      .lean()
+      .exec();
     if (!post) {
       throw new NotFoundException(`Post with ID "${id}" not found`);
     }
