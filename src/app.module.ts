@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 import { PostsModule } from './posts/posts.module';
+import { ContactModule } from './contact/contact.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ImageController } from './image/image.controller';
 @Module({
@@ -15,6 +16,7 @@ import { ImageController } from './image/image.controller';
     ProductsModule,
     DatabaseModule,
     PostsModule,
+    ContactModule,
     CloudinaryModule,
   ],
   controllers: [AppController, ImageController],
