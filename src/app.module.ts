@@ -9,6 +9,7 @@ import { PostsModule } from './posts/posts.module';
 import { ContactModule } from './contact/contact.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ImageController } from './image/image.controller';
+import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.module';
 @Module({
   imports: [
     UsersModule,
@@ -18,6 +19,7 @@ import { ImageController } from './image/image.controller';
     PostsModule,
     ContactModule,
     CloudinaryModule,
+    CommentsAboutMeModule,
   ],
   controllers: [AppController, ImageController],
   providers: [AppService],
