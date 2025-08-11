@@ -25,7 +25,13 @@ export class CommentsAboutMeService {
   async findAll(
     query: PaginationQueryDto,
   ): Promise<PaginationResult<CommentsAboutMe>> {
-    return paginate<CommentsAboutMe>(this.commentsAboutMeModel, query);
+    return paginate<CommentsAboutMe>(
+      this.commentsAboutMeModel,
+      query,
+      {},
+      null,
+      { sort: { createdAt: -1 } },
+    );
   }
 
   async findOne(id: string): Promise<CommentsAboutMe> {
