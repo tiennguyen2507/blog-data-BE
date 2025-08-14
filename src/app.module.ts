@@ -10,6 +10,7 @@ import { ContactModule } from './contact/contact.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ImageController } from './image/image.controller';
 import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.module';
+import { AutoBlogModule } from './auto-blog/auto-blog.module';
 @Module({
   imports: [
     UsersModule,
@@ -20,6 +21,7 @@ import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.mod
     ContactModule,
     CloudinaryModule,
     CommentsAboutMeModule,
+    AutoBlogModule,
   ],
   controllers: [AppController, ImageController],
   providers: [AppService],
