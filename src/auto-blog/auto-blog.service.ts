@@ -81,17 +81,22 @@ Hãy viết lại hoàn toàn bài báo sau đây bằng tiếng Việt tự nhi
 Tiêu đề: ${article.title}
 Nội dung gốc: ${article.content}
 
-Yêu cầu:
+YÊU CẦU QUAN TRỌNG:
 - Viết lại hoàn toàn, không copy nội dung gốc
 - Giữ nguyên ý chính và thông tin quan trọng
 - Sử dụng giọng văn tự nhiên, dễ đọc, chuyên nghiệp
 - Tối ưu SEO với từ khóa phù hợp
-- Độ dài khoảng 800-1200 từ (dài hơn, chi tiết hơn)
-- Viết theo phong cách báo chí chuyên nghiệp
-- Mở rộng thông tin với các ví dụ, giải thích chi tiết
+- ĐỘ DÀI BẮT BUỘC: 3000-4000 từ (nội dung phải thực sự dài và chi tiết)
+- Viết theo phong cách báo chí chuyên nghiệp, sâu sắc và thu hút
+- Mở rộng thông tin với các ví dụ cụ thể, giải thích chi tiết, số liệu thống kê
 - Thêm phần kết luận hoặc ý nghĩa thực tế
 - Sử dụng các từ nối để tạo mạch lạc
 - Thêm thông tin bổ sung liên quan đến chủ đề
+- Phân tích sâu hơn về tác động và xu hướng
+- Thêm các góc nhìn khác nhau về vấn đề
+- Mỗi phần phải có ít nhất 4-5 đoạn văn chi tiết
+- Sử dụng ngôn ngữ phong phú, đa dạng từ vựng
+- Tạo ra giá trị thực sự cho người đọc
 
 QUAN TRỌNG: BẮT BUỘC trả về nội dung theo định dạng HTML để hiển thị với React Quill. Sử dụng các thẻ HTML sau:
 - <p> cho đoạn văn bản
@@ -103,18 +108,44 @@ QUAN TRỌNG: BẮT BUỘC trả về nội dung theo định dạng HTML để 
 - <blockquote> cho trích dẫn
 - <br> cho xuống dòng
 
-Ví dụ format HTML:
-<p>Đoạn văn mở đầu...</p>
-<h2>Tiêu đề chính</h2>
-<p>Nội dung chi tiết...</p>
-<h3>Tiêu đề phụ</h3>
-<ul>
-<li>Mục 1</li>
-<li>Mục 2</li>
-</ul>
-<p>Kết luận...</p>
+CẤU TRÚC BÀI VIẾT CHI TIẾT:
+1. Mở đầu: Giới thiệu chủ đề (400-500 từ)
+2. Phát triển chính: 4-5 phần với tiêu đề H2 (1500-2000 từ)
+3. Phân tích sâu: 3-4 phần với tiêu đề H3 (800-1200 từ)
+4. Kết luận: Tóm tắt và ý nghĩa (300-400 từ)
 
-Trả về nội dung HTML:
+Ví dụ format HTML:
+<p>Đoạn văn mở đầu chi tiết và thu hút...</p>
+<h2>Tiêu đề chính 1</h2>
+<p>Nội dung chi tiết và sâu sắc với nhiều thông tin bổ sung...</p>
+<p>Tiếp tục phân tích chi tiết hơn...</p>
+<p>Thêm ví dụ cụ thể và số liệu...</p>
+<h3>Tiêu đề phụ 1.1</h3>
+<p>Phân tích chi tiết hơn với góc nhìn mới...</p>
+<p>Mở rộng thông tin và giải thích...</p>
+<h3>Tiêu đề phụ 1.2</h3>
+<p>Phân tích thêm khía cạnh khác...</p>
+<p>Thêm thông tin bổ sung...</p>
+<h2>Tiêu đề chính 2</h2>
+<p>Nội dung chi tiết và sâu sắc...</p>
+<p>Tiếp tục phân tích...</p>
+<p>Thêm ví dụ và giải thích...</p>
+<h3>Tiêu đề phụ 2.1</h3>
+<p>Phân tích chi tiết hơn...</p>
+<p>Mở rộng thông tin...</p>
+<h2>Tiêu đề chính 3</h2>
+<p>Nội dung chi tiết và sâu sắc...</p>
+<p>Tiếp tục phân tích...</p>
+<p>Thêm thông tin bổ sung...</p>
+<h2>Tiêu đề chính 4</h2>
+<p>Nội dung chi tiết và sâu sắc...</p>
+<p>Tiếp tục phân tích...</p>
+<p>Thêm ví dụ cụ thể...</p>
+<h2>Kết luận</h2>
+<p>Kết luận chi tiết và ý nghĩa thực tế...</p>
+<p>Tóm tắt những điểm quan trọng...</p>
+
+Trả về nội dung HTML với độ dài tối thiểu 3000 từ:
 `;
 
       const response = await axios.post(
@@ -128,7 +159,7 @@ Trả về nội dung HTML:
             },
           ],
           temperature: 0.7,
-          max_tokens: 1000,
+          max_tokens: 4000,
         },
         {
           headers: {
@@ -344,10 +375,44 @@ Trả về nội dung HTML:
         return false;
       }
 
+      // Kiểm tra độ dài content và tạo description phù hợp
+      let description = blogPost.content;
+
+      // Nếu content quá ngắn, thêm thông tin bổ sung
+      if (description.length < 1000) {
+        this.logger.warn(
+          `Content too short (${description.length} chars), enhancing description...`,
+        );
+
+        // Thêm thông tin bổ sung vào description
+        const enhancedDescription = `
+          ${description}
+          
+          <h2>Thông tin bổ sung</h2>
+          <p>Bài viết này cung cấp thông tin chi tiết về ${blogPost.title.toLowerCase()}, 
+          bao gồm các khía cạnh quan trọng và ý nghĩa thực tế trong cuộc sống hiện đại.</p>
+          
+          <h3>Lợi ích và tác động</h3>
+          <ul>
+            <li>Hiểu biết sâu sắc về chủ đề</li>
+            <li>Áp dụng thực tế trong cuộc sống</li>
+            <li>Cập nhật xu hướng mới nhất</li>
+          </ul>
+          
+          <h3>Kết luận</h3>
+          <p>Thông qua bài viết này, bạn đọc có thể nắm bắt được những thông tin quan trọng 
+          và cập nhật nhất về ${blogPost.title.toLowerCase()}, giúp mở rộng kiến thức và 
+          áp dụng hiệu quả trong thực tế.</p>
+        `;
+
+        description = enhancedDescription;
+        this.logger.log(`Enhanced description length: ${description.length} chars`);
+      }
+
       // Tạo post mới trong MongoDB
       const newPost = new this.postModel({
         title: blogPost.title,
-        description: blogPost.content, // Sử dụng content làm description
+        description: description, // Sử dụng description đã được enhance
         thumbnail: blogPost.image, // Sử dụng image làm thumbnail
         status: true, // true = published
         createdBy: adminUserId, // Sử dụng ID của user admin
