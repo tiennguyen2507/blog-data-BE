@@ -1,6 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Inject } from '@nestjs/common';
 import { Model, Types } from 'mongoose';
 import { POST_MODEL } from '../providers/post.providers';
 import { Post } from '../schemas/post.schema';
@@ -53,9 +52,7 @@ export class AutoBlogService {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      const todayArticles = allArticles.filter(
-        (article) => article.publishedAt >= today,
-      );
+      const todayArticles = allArticles.filter(article => article.publishedAt >= today);
 
       this.logger.log(`Found ${todayArticles.length} articles from today`);
 
@@ -186,14 +183,8 @@ Trả về nội dung HTML:
         )
 
         // Bold và italic với style
-        .replace(
-          /\*\*(.*?)\*\*/g,
-          '<strong style="color: #e74c3c; font-weight: 600;">$1</strong>',
-        )
-        .replace(
-          /\*(.*?)\*/g,
-          '<em style="color: #9b59b6; font-style: italic;">$1</em>',
-        )
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #e74c3c; font-weight: 600;">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em style="color: #9b59b6; font-style: italic;">$1</em>')
 
         // Danh sách với style đẹp
         .replace(
@@ -320,9 +311,7 @@ Trả về nội dung HTML:
     ];
 
     const text = `${title} ${content}`.toLowerCase();
-    const foundTags = techKeywords.filter((keyword) =>
-      text.includes(keyword.toLowerCase()),
-    );
+    const foundTags = techKeywords.filter(keyword => text.includes(keyword.toLowerCase()));
 
     // Thêm tag mặc định nếu không tìm thấy tag nào
     if (foundTags.length === 0) {
@@ -334,9 +323,7 @@ Trả về nội dung HTML:
 
   async getAdminUserId(): Promise<Types.ObjectId | null> {
     try {
-      const adminUser = await this.userModel
-        .findOne({ email: 'admin@gmail.com' })
-        .exec();
+      const adminUser = await this.userModel.findOne({ email: 'admin@gmail.com' }).exec();
       if (adminUser) {
         return adminUser._id;
       }
@@ -375,10 +362,7 @@ Trả về nội dung HTML:
       console.log(`✅ Blog posted successfully: ${blogPost.title}`);
       return true;
     } catch (error) {
-      this.logger.error(
-        `Error posting blog "${blogPost.title}":`,
-        error.message,
-      );
+      this.logger.error(`Error posting blog "${blogPost.title}":`, error.message);
       return false;
     }
   }
@@ -403,35 +387,27 @@ Trả về nội dung HTML:
         headers: {
           'User-Agent': 'AutoBlog-System/1.0',
         },
-        validateStatus: (status) => status < 500, // Chấp nhận status 2xx, 3xx, 4xx
+        validateStatus: status => status < 500, // Chấp nhận status 2xx, 3xx, 4xx
       });
 
       if (response.status === 200) {
         this.logger.log(`✅ Google ping successful for: ${postUrl}`);
         console.log(`✅ Google ping successful for: ${postUrl}`);
       } else {
-        this.logger.warn(
-          `⚠️ Google ping returned status: ${response.status} for: ${postUrl}`,
-        );
-        console.log(
-          `⚠️ Google ping returned status: ${response.status} for: ${postUrl}`,
-        );
+        this.logger.warn(`⚠️ Google ping returned status: ${response.status} for: ${postUrl}`);
+        console.log(`⚠️ Google ping returned status: ${response.status} for: ${postUrl}`);
       }
 
       // Gửi URL trực tiếp đến Google Indexing API (nếu có API key)
       await this.submitToGoogleIndexingAPI(postUrl);
     } catch (error) {
-      this.logger.warn(
-        `Failed to notify Google for indexing: ${error.message}`,
-      );
+      this.logger.warn(`Failed to notify Google for indexing: ${error.message}`);
       console.log(`❌ Google notification failed: ${error.message}`);
 
       // Log chi tiết lỗi để debug
       if (error.response) {
         this.logger.warn(`Response status: ${error.response.status}`);
-        this.logger.warn(
-          `Response data: ${JSON.stringify(error.response.data)}`,
-        );
+        this.logger.warn(`Response data: ${JSON.stringify(error.response.data)}`);
       }
     }
   }
@@ -512,7 +488,7 @@ Trả về nội dung HTML:
         }
 
         // Delay giữa các request để tránh rate limiting
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
 
       this.logger.log(

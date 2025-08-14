@@ -17,13 +17,10 @@ export class CloudinaryService {
         quality: 'auto',
         ...options,
       };
-      const uploadStream = cloudinary.uploader.upload_stream(
-        uploadOptions,
-        (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
-        },
-      );
+      const uploadStream = cloudinary.uploader.upload_stream(uploadOptions, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   }

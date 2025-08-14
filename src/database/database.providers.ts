@@ -12,7 +12,7 @@ export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: (): Promise<typeof mongoose> => {
-      return mongoose.connect(mongoUri).then((value) => {
+      return mongoose.connect(mongoUri).then(value => {
         log.success_('Connect DB success!!');
         return value;
       });

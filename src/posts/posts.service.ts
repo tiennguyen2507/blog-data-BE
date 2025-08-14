@@ -71,10 +71,7 @@ export class PostsService {
   }
 
   async remove(id: string): Promise<Post> {
-    const deletedPost = await this.postModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
+    const deletedPost = await this.postModel.findByIdAndDelete(id).lean().exec();
     if (!deletedPost) {
       throw new NotFoundException(`Post with ID "${id}" not found`);
     }

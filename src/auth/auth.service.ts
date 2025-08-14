@@ -23,10 +23,7 @@ export class AuthService {
       expiresIn: '1h',
     });
 
-    await this.userModel.findOneAndUpdate(
-      { email: payload.email },
-      { refresh_token },
-    );
+    await this.userModel.findOneAndUpdate({ email: payload.email }, { refresh_token });
 
     return { access_token, refresh_token };
   }

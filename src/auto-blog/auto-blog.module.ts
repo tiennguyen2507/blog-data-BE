@@ -13,13 +13,7 @@ import { SitemapService } from './sitemap.service';
 @Module({
   imports: [ScheduleModule.forRoot(), ConfigModule, DatabaseModule],
   controllers: [AutoBlogController, SEOController],
-  providers: [
-    AutoBlogService,
-    AutoBlogCron,
-    SitemapService,
-    ...postProviders,
-    ...usersProviders,
-  ],
+  providers: [AutoBlogService, AutoBlogCron, SitemapService, ...postProviders, ...usersProviders],
   exports: [AutoBlogService],
 })
 export class AutoBlogModule {}

@@ -27,10 +27,7 @@ export class ImageController {
     },
   })
   @UseInterceptors(FileInterceptor('file'))
-  uploadImage(
-    @UploadedFile() file: Express.Multer.File,
-    @Body('folder') folder?: string,
-  ) {
+  uploadImage(@UploadedFile() file: Express.Multer.File, @Body('folder') folder?: string) {
     if (!file) throw new BadRequestException('File is required');
     return this.cloudinaryService.uploadFile(file, folder);
   }

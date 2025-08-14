@@ -58,16 +58,9 @@ export class SitemapService {
 
   async getSitemapUrls(): Promise<string[]> {
     try {
-      const posts = await this.postModel
-        .find({ status: true })
-        .select('_id')
-        .lean()
-        .exec();
+      const posts = await this.postModel.find({ status: true }).select('_id').lean().exec();
 
-      const urls = [
-        'https://nguyenledinhtien.io.vn/',
-        'https://nguyenledinhtien.io.vn/posts',
-      ];
+      const urls = ['https://nguyenledinhtien.io.vn/', 'https://nguyenledinhtien.io.vn/posts'];
 
       // Thêm URL của tất cả bài viết
       for (const post of posts) {

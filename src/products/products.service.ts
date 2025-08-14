@@ -7,9 +7,7 @@ import { paginate, PaginationQuery, PaginationResult } from '../lib/pagination';
 
 @Injectable()
 export class ProductsService {
-  constructor(
-    @Inject(PRODUCT_NAME_MODEL) private readonly productsModel: Model<Product>,
-  ) {}
+  constructor(@Inject(PRODUCT_NAME_MODEL) private readonly productsModel: Model<Product>) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const createdProduct = new this.productsModel(createProductDto);
@@ -28,10 +26,7 @@ export class ProductsService {
     return product;
   }
 
-  async update(
-    id: string,
-    updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
     const updatedProduct = await this.productsModel
       .findByIdAndUpdate(id, updateProductDto, {
         new: true,
@@ -46,10 +41,7 @@ export class ProductsService {
   }
 
   async remove(id: string): Promise<Product> {
-    const deletedProduct = await this.productsModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
+    const deletedProduct = await this.productsModel.findByIdAndDelete(id).lean().exec();
     if (!deletedProduct) {
       throw new NotFoundException(`Product with ID "${id}" not found`);
     }

@@ -8,9 +8,7 @@ import { PaginationQuery } from '../lib/pagination';
 
 @Injectable()
 export class ContactService {
-  constructor(
-    @Inject(CONTACT_MODEL) private readonly contactModel: Model<Contact>,
-  ) {}
+  constructor(@Inject(CONTACT_MODEL) private readonly contactModel: Model<Contact>) {}
 
   async create(createContactDto: CreateContactDto): Promise<Contact> {
     const createdContact = new this.contactModel(createContactDto);
@@ -23,13 +21,7 @@ export class ContactService {
     const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([
-      this.contactModel
-        .find()
-        .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 })
-        .lean()
-        .exec(),
+      this.contactModel.find().skip(skip).limit(limit).sort({ createdAt: -1 }).lean().exec(),
       this.contactModel.countDocuments(),
     ]);
 
@@ -51,10 +43,7 @@ export class ContactService {
     return contact;
   }
 
-  async update(
-    id: string,
-    updateContactDto: UpdateContactDto,
-  ): Promise<Contact> {
+  async update(id: string, updateContactDto: UpdateContactDto): Promise<Contact> {
     const updatedContact = await this.contactModel
       .findByIdAndUpdate(id, updateContactDto, {
         new: true,
@@ -69,10 +58,7 @@ export class ContactService {
   }
 
   async remove(id: string): Promise<Contact> {
-    const deletedContact = await this.contactModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
+    const deletedContact = await this.contactModel.findByIdAndDelete(id).lean().exec();
     if (!deletedContact) {
       throw new NotFoundException(`Contact with ID "${id}" not found`);
     }

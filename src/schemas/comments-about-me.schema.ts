@@ -27,5 +27,4 @@ export class CommentsAboutMe {
   updatedAt?: Date;
 }
 
-export const CommentsAboutMeSchema =
-  SchemaFactory.createForClass(CommentsAboutMe);
+export const CommentsAboutMeSchema = SchemaFactory.createForClass(CommentsAboutMe);

@@ -18,12 +18,10 @@ export class UsersService {
   async findAll(): Promise<GetAllResponse[]> {
     const users = await this.userModel
       .find()
-      .select(
-        fieldSelector.exclude(['refresh_token', 'password'], { withId: true }),
-      )
+      .select(fieldSelector.exclude(['refresh_token', 'password'], { withId: true }))
       .exec();
 
-    return users.map((user) => {
+    return users.map(user => {
       const value = {
         ...user.toObject(),
         fullName: `${user.firstName} ${user.lastName}`,
@@ -39,11 +37,7 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel.findByIdAndUpdate(
-      id,
-      updateUserDto,
-      { new: true },
-    );
+    const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
     return updatedUser;
   }
 

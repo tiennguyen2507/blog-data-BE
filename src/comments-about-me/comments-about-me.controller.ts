@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ApiTags, ApiQuery } from '@nestjs/swagger';
 import { CommentsAboutMeService } from './comments-about-me.service';
 import { CreateCommentsAboutMeDto } from './dto/create-comments-about-me.dto';

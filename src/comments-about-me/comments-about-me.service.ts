@@ -4,11 +4,7 @@ import { COMMENTS_ABOUT_ME_MODEL } from '../providers/comments-about-me.provider
 import { CommentsAboutMe } from '../schemas/comments-about-me.schema';
 import { CreateCommentsAboutMeDto } from './dto/create-comments-about-me.dto';
 import { UpdateCommentsAboutMeDto } from './dto/update-comments-about-me.dto';
-import {
-  PaginationQueryDto,
-  paginate,
-  PaginationResult,
-} from '../lib/pagination';
+import { PaginationQueryDto, paginate, PaginationResult } from '../lib/pagination';
 
 @Injectable()
 export class CommentsAboutMeService {
@@ -22,16 +18,10 @@ export class CommentsAboutMeService {
     return created.save();
   }
 
-  async findAll(
-    query: PaginationQueryDto,
-  ): Promise<PaginationResult<CommentsAboutMe>> {
-    return paginate<CommentsAboutMe>(
-      this.commentsAboutMeModel,
-      query,
-      {},
-      null,
-      { sort: { createdAt: -1 } },
-    );
+  async findAll(query: PaginationQueryDto): Promise<PaginationResult<CommentsAboutMe>> {
+    return paginate<CommentsAboutMe>(this.commentsAboutMeModel, query, {}, null, {
+      sort: { createdAt: -1 },
+    });
   }
 
   async findOne(id: string): Promise<CommentsAboutMe> {
@@ -42,10 +32,7 @@ export class CommentsAboutMeService {
     return comment;
   }
 
-  async update(
-    id: string,
-    updateDto: UpdateCommentsAboutMeDto,
-  ): Promise<CommentsAboutMe> {
+  async update(id: string, updateDto: UpdateCommentsAboutMeDto): Promise<CommentsAboutMe> {
     const updated = await this.commentsAboutMeModel
       .findByIdAndUpdate(id, updateDto, { new: true, runValidators: true })
       .lean()
@@ -57,10 +44,7 @@ export class CommentsAboutMeService {
   }
 
   async remove(id: string): Promise<CommentsAboutMe> {
-    const deleted = await this.commentsAboutMeModel
-      .findByIdAndDelete(id)
-      .lean()
-      .exec();
+    const deleted = await this.commentsAboutMeModel.findByIdAndDelete(id).lean().exec();
     if (!deleted) {
       throw new NotFoundException(`Comment with ID "${id}" not found`);
     }

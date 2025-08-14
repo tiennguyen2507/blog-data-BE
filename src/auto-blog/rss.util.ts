@@ -81,7 +81,7 @@ export class RSSUtil {
 
   static removeDuplicateArticles(articles: RSSArticle[]): RSSArticle[] {
     const seen = new Set<string>();
-    return articles.filter((article) => {
+    return articles.filter(article => {
       const normalizedTitle = article.title.toLowerCase().trim();
       if (seen.has(normalizedTitle)) {
         return false;
@@ -91,10 +91,7 @@ export class RSSUtil {
     });
   }
 
-  static getLatestArticles(
-    articles: RSSArticle[],
-    limit: number = 10,
-  ): RSSArticle[] {
+  static getLatestArticles(articles: RSSArticle[], limit: number = 10): RSSArticle[] {
     return articles
       .sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
       .slice(0, limit);
