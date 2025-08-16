@@ -5,3 +5,6 @@ export const fieldSelector = {
   exclude: (value: string[], { withId }: { withId?: boolean } = {}): string =>
     value.map(field => `-${field}`).join(' ') + `${!withId ? ' -_id -__v' : ' -__v'}`,
 };
+
+// Export pagination utilities
+export * from './pagination';
