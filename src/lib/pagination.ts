@@ -45,7 +45,10 @@ export async function paginate<T = any>(
 
   const [data, total] = await Promise.all([
     model
-      .find(filter, projection, { ...options, skip, limit })
+      .find(filter, projection)
+      .sort(options.sort || { createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
       .lean()
       .exec(),
     model.countDocuments(filter),

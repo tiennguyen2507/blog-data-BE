@@ -13,19 +13,20 @@ export class Product {
   @Prop({ required: true, type: String })
   description: string;
 
-  @Prop({ required: true })
-  sizes: {
-    size: 'S' | 'M' | 'L';
-    price: number;
-    sales: number;
-    image: string[];
-  }[];
+  @Prop({ required: true, type: Number, min: 0 })
+  price: number;
 
-  @Prop({
-    enum: ['bakery', 'accessory', 'other'],
-    default: 'bakery',
-  })
-  category: 'bakery' | 'accessory' | 'other';
+  @Prop({ required: true, type: Number, min: 0, default: 0 })
+  sales: number;
+
+  @Prop({ required: true, type: String })
+  category: string;
+
+  @Prop({ required: true, type: String })
+  thumbnail: string;
+
+  @Prop({ required: true, type: Number, min: 0, default: 0 })
+  quantity: number;
 }
 
 export const ProductsSchema = SchemaFactory.createForClass(Product);
