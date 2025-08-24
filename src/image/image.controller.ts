@@ -39,18 +39,27 @@ export class ImageController {
     return this.cloudinaryService.uploadFile(file, folder);
   }
 
-  @Get('proxy-image')
+  @Get('proxy-image-encoded')
   @ApiQuery({
-    name: 'url',
-    description: 'Cloudinary image URL',
-    example: 'https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/sample.jpg',
+    name: 'encodedUrl',
+    description: 'Base64 encoded Cloudinary image URL',
+    example:
+      'aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20veW91ci1jbG91ZC1uYW1lL2ltYWdlL3VwbG9hZC92MTIzNDU2Nzg5MC9zYW1wbGUuanBn',
     required: true,
   })
-  async proxyImage(@Query('url') url: string, @Res() res: Response) {
+  async proxyImageEncoded(@Query('encodedUrl') encodedUrl: string, @Res() res: Response) {
     try {
-      // Validate URL
-      if (!url) {
-        throw new BadRequestException('URL parameter is required');
+      // Validate encoded URL
+      if (!encodedUrl) {
+        throw new BadRequestException('Encoded URL parameter is required');
+      }
+
+      // Decode Base64 URL
+      let url: string;
+      try {
+        url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
+      } catch (error) {
+        throw new BadRequestException('Invalid Base64 encoding');
       }
 
       // Validate if it's a Cloudinary URL
