@@ -13,6 +13,7 @@ import { ImageController } from './image/image.controller';
 import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.module';
 import { AutoBlogModule } from './auto-blog/auto-blog.module';
 import { OrderModule } from './order/order.module';
+import { TelegramModule } from './telegram/telegram.module';
 @Module({
   imports: [
     UsersModule,
@@ -26,6 +27,7 @@ import { OrderModule } from './order/order.module';
     CommentsAboutMeModule,
     AutoBlogModule,
     OrderModule,
+    TelegramModule,
   ],
   controllers: [AppController, ImageController],
   providers: [AppService],

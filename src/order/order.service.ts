@@ -5,6 +5,7 @@ import { FilterOrderDto } from './dto/filter-order.dto';
 import { Model, Types } from 'mongoose';
 import { ORDER_NAME_MODEL, Order, OrderItem } from 'src/schemas/order.schema';
 import { PRODUCT_NAME_MODEL, Product } from 'src/schemas/products.schema';
+import { TelegramService } from '../telegram/telegram.service';
 
 export interface PaginationResult<T> {
   data: T[];
@@ -20,6 +21,7 @@ export class OrderService {
   constructor(
     @Inject(ORDER_NAME_MODEL) private readonly orderModel: Model<Order>,
     @Inject(PRODUCT_NAME_MODEL) private readonly productModel: Model<Product>,
+    private readonly telegramService: TelegramService,
   ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
@@ -60,7 +62,17 @@ export class OrderService {
       status: 'pending',
     });
 
-    return order.save();
+    const savedOrder = await order.save();
+
+    // Send Telegram notification
+    try {
+      await this.telegramService.sendOrderNotification(savedOrder);
+    } catch (error) {
+      // Log error but don't fail the order creation
+      console.error('Failed to send Telegram notification:', error);
+    }
+
+    return savedOrder;
   }
 
   async findAll(filterDto?: FilterOrderDto): Promise<PaginationResult<Order>> {
