@@ -12,6 +12,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ImageController } from './image/image.controller';
 import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.module';
 import { AutoBlogModule } from './auto-blog/auto-blog.module';
+import { OrderModule } from './order/order.module';
 @Module({
   imports: [
     UsersModule,
@@ -24,6 +25,7 @@ import { AutoBlogModule } from './auto-blog/auto-blog.module';
     CloudinaryModule,
     CommentsAboutMeModule,
     AutoBlogModule,
+    OrderModule,
   ],
   controllers: [AppController, ImageController],
   providers: [AppService],
