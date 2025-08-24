@@ -1,21 +1,20 @@
 import {
   Controller,
   Post,
-  Get,
   UploadedFile,
   UseInterceptors,
   BadRequestException,
   Body,
-  Query,
   Res,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiBody, ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiConsumes, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { Response } from 'express';
 import axios from 'axios';
+import { ProxyImageDto } from './dto/proxy-image.dto';
 
 @ApiTags('Image')
 @Controller('image')
@@ -39,15 +38,10 @@ export class ImageController {
     return this.cloudinaryService.uploadFile(file, folder);
   }
 
-  @Get('proxy-image-encoded')
-  @ApiQuery({
-    name: 'encodedUrl',
-    description: 'Base64 encoded Cloudinary image URL',
-    example:
-      'aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20veW91ci1jbG91ZC1uYW1lL2ltYWdlL3VwbG9hZC92MTIzNDU2Nzg5MC9zYW1wbGUuanBn',
-    required: true,
-  })
-  async proxyImageEncoded(@Query('encodedUrl') encodedUrl: string, @Res() res: Response) {
+  @Post('proxy-image-encoded')
+  @ApiBody({ type: ProxyImageDto })
+  async proxyImageEncoded(@Body() proxyImageDto: ProxyImageDto, @Res() res: Response) {
+    const { encodedUrl } = proxyImageDto;
     try {
       // Validate encoded URL
       if (!encodedUrl) {
