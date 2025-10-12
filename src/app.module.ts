@@ -14,6 +14,7 @@ import { CommentsAboutMeModule } from './comments-about-me/comments-about-me.mod
 import { AutoBlogModule } from './auto-blog/auto-blog.module';
 import { OrderModule } from './order/order.module';
 import { TelegramModule } from './telegram/telegram.module';
+import { NewsModule } from './news/news.module';
 @Module({
   imports: [
     UsersModule,
@@ -28,6 +29,7 @@ import { TelegramModule } from './telegram/telegram.module';
     AutoBlogModule,
     OrderModule,
     TelegramModule,
+    NewsModule,
   ],
   controllers: [AppController, ImageController],
   providers: [AppService],
