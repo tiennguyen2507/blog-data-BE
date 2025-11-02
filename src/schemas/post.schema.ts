@@ -17,6 +17,9 @@ export class Post {
   @Prop({ default: null })
   thumbnail?: string;
 
+  @Prop({ default: 'my-blogs' })
+  category: string;
+
   @Prop()
   createdAt?: Date;
 

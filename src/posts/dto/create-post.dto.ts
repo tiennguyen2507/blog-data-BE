@@ -19,4 +19,12 @@ export class CreatePostDto {
   @IsOptional()
   @IsString()
   thumbnail?: string;
+
+  @ApiProperty({
+    description: 'Post category',
+    example: 'technology',
+  })
+  @IsNotEmpty()
+  @IsString()
+  category: string;
 }
