@@ -1,10 +1,11 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsOptional, IsInt, Min } from 'class-validator';
+import { IsOptional, IsInt, Min, IsString } from 'class-validator';
 
 export interface PaginationQuery {
   page?: number;
   limit?: number;
+  category?: string;
 }
 
 export interface PaginationResult<T> {
@@ -30,6 +31,11 @@ export class PaginationQueryDto {
   @IsInt()
   @Min(1)
   limit?: number;
+
+  @ApiPropertyOptional({ description: 'Filter by category', example: 'technology' })
+  @IsOptional()
+  @IsString()
+  category?: string;
 }
 
 export async function paginate<T = any>(

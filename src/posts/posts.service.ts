@@ -23,15 +23,21 @@ export class PostsService {
     const limit = Math.max(1, Number(query?.limit) || 10);
     const skip = (page - 1) * limit;
 
+    // Build filter object based on query parameters
+    const filter: Record<string, string> = {};
+    if (query?.category) {
+      filter.category = query.category;
+    }
+
     const [data, total] = await Promise.all([
       this.postModel
-        .find()
+        .find(filter)
         .skip(skip)
         .limit(limit)
         .populate('createdBy', 'firstName lastName avatar')
         .lean()
         .exec(),
-      this.postModel.countDocuments(),
+      this.postModel.countDocuments(filter),
     ]);
 
     return {
