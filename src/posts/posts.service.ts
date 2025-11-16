@@ -32,6 +32,7 @@ export class PostsService {
     const [data, total] = await Promise.all([
       this.postModel
         .find(filter)
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
         .populate('createdBy', 'firstName lastName avatar')
